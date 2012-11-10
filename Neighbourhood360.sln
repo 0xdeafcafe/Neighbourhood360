@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neighbourhood_WP", "PhoneApp1\Neighbourhood_WP.csproj", "{C33865CE-AE3E-49A6-A282-572EF0EE13E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neighbourhood_WP", "Neighbourhood_WP\Neighbourhood_WP.csproj", "{C33865CE-AE3E-49A6-A282-572EF0EE13E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XDevKit", "XDevKit\XDevKit.csproj", "{D509E20A-B700-43C1-BAAB-52F7DA37FEAD}"
 EndProject
