@@ -1,6 +1,6 @@
-﻿using Neighbourhood_WP.Resources;
+﻿using Neighbourhood_WindowsPhone.Resources;
 
-namespace Neighbourhood_WP
+namespace Neighbourhood_WindowsPhone
 {
     /// <summary>
     /// Provides access to string resources.

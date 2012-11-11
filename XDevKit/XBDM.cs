@@ -146,7 +146,15 @@ namespace XDevKit
             }
             catch (Exception ex) { GenerateException(ex.Message); }
         }
-        public string GetFromTextCommand(string command, string mustFind, bool canBeEmpty)
+
+        public enum ResponseTypes
+        {
+            Singleline = 200,
+            Connected  = 201,
+            Multiline  = 202,
+            OtherSingleLineidontevenknow = 420
+        }
+        public string GetFromTextCommand(string command, string mustFind, bool canBeEmpty, ResponseTypes responseType)
         {
             try
             {
@@ -162,7 +170,16 @@ namespace XDevKit
 
                 string response = GetFromTextCommand();
 
-                if (mustFind != "")
+                if (!response.StartsWith(((int)responseType).ToString() + "-"))
+                    if (retries >= MAX_RETRY_COUNT)
+                        return null;
+                    else
+                    {
+                        retries++;
+                        goto retry;
+                    }
+
+                if (responseType == ResponseTypes.Multiline)
                 {
                     while (!response.EndsWith(".\r\n"))
                     {
@@ -252,7 +269,7 @@ namespace XDevKit
         {
             try
             {
-                string response = GetFromTextCommand("dbgname", "", false);//.Split('\n')[1].Remove(0, 5).Replace("\r", "");
+                string response = GetFromTextCommand("dbgname", "", false, ResponseTypes.Singleline);//.Split('\n')[1].Remove(0, 5).Replace("\r", "");
 
                 if (response == null || response == "")
                     throw new Exception();
@@ -270,7 +287,7 @@ namespace XDevKit
         {
             try
             {
-                string response = GetFromTextCommand("consoletype", "", false);
+                string response = GetFromTextCommand("consoletype", "", false, ResponseTypes.Singleline);
 
                 if (response == null || response == "")
                     throw new Exception();
@@ -283,7 +300,7 @@ namespace XDevKit
         {
             try
             {
-                string response = GetFromTextCommand("boxid", "", false);
+                string response = GetFromTextCommand("boxid", "", false, ResponseTypes.OtherSingleLineidontevenknow);
 
                 if (response == null || response == "")
                     throw new Exception();
@@ -294,7 +311,7 @@ namespace XDevKit
         }
         private void GetConsoleRunningInfo()
         {
-            string response = GetFromTextCommand("xbeinfo running", "name=", false);
+            string response = GetFromTextCommand("xbeinfo running", "name=", false, ResponseTypes.Multiline);
 
             if (response == null || response == "")
                 throw new Exception();
@@ -348,7 +365,7 @@ namespace XDevKit
             /*
             202- multiline response follows\r\ndrivename=\"E\"\r\ndrivename=\"DEVKIT\"\r\ndrivename=\"HDD\"\r\ndrivename=\"FLASH\"\r\n.\r\n 
             */
-            string[] response = GetFromTextCommand("drivelist", "drivename", false).Replace("\r", "").Split('\n');
+            string[] response = GetFromTextCommand("drivelist", "drivename", false, ResponseTypes.Multiline).Replace("\r", "").Split('\n');
 
             if (response == null || response[0] == "")
                 throw new Exception("Unable to get list of drives");
@@ -367,7 +384,7 @@ namespace XDevKit
                     */
                     if (drivePath != "." && drivePath != "")
                     {
-                        response = GetFromTextCommand(string.Format("drivefreespace name=\"{0}\"", drivePath + ":\\"), "freetocallerlo", false).Replace("\r", "").Split('\n');
+                        response = GetFromTextCommand(string.Format("drivefreespace name=\"{0}\"", drivePath + ":\\"), "freetocallerlo", false, ResponseTypes.Multiline).Replace("\r", "").Split('\n');
 
                         if (response == null || response[0] == "")
                             throw new Exception("Unable to get drive size");
@@ -389,7 +406,7 @@ namespace XDevKit
         {
             IList<DirectoryObject> direcObject = new List<DirectoryObject>();
 
-            string[] response = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true).Replace("\r", "").Split('\n');
+            string[] response = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline).Replace("\r", "").Split('\n');
 
             if (response == null || response[0] == "")
                 throw new Exception();
