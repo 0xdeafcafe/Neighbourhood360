@@ -19,8 +19,9 @@ namespace Neighbourhood_WindowsPhone
         {
             InitializeComponent();
 
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
+#if DEBUG
+            txtIP.Text = "192.168.1.68";
+#endif
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -43,7 +44,7 @@ namespace Neighbourhood_WindowsPhone
             Match matchIP = regexIP.Match(ip = txtIP.Text);
             if (!matchIP.Success || !int.TryParse(txtPort.Text, out port))
             {
-                MessageBox.Show("Invalid IP/Port", "The IP address or Port you entered is not valid.", MessageBoxButton.OK);
+                MessageBox.Show("The IP address or Port you entered is not valid.", "Invalid IP/Port", MessageBoxButton.OK);
                 return;
             }
 
@@ -63,25 +64,9 @@ namespace Neighbourhood_WindowsPhone
             }
             else
             {
-                MessageBox.Show("Connection Error", "Unable to connect to debug xbox. Check it is turned on and connected to the same network!", MessageBoxButton.OK);
+                MessageBox.Show("Unable to connect to debug xbox. Check it is turned on and connected to the same network.", "Connection Error", MessageBoxButton.OK);
                 return;
             }
         }
-
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
-
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
-
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
     }
 }

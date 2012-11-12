@@ -20,7 +20,7 @@ namespace XDevKit
         private Socket _socket = null;
         private const int TIMEOUT_MILLISECONDS = 10000; // 7000 milliseconds
         private const int MAX_BUFFER_SIZE = 1020; // 1 kb
-        private const int MAX_RETRY_COUNT = 100;
+        private const int MAX_RETRY_COUNT = 5;
 
         private string _consoleIP = null;
         private int _consolePort = 730;
@@ -56,46 +56,57 @@ namespace XDevKit
 
         public bool Connect()
         {
-            try
+            if (!_isConnected)
             {
-                if (!_isConnected)
-                {
-                    if (_consoleIP == "" || _consoleIP == null)
-                        return false;
+                if (_consoleIP == "" || _consoleIP == null)
+                    return false;
 
-                    string response = "";
+                _isConnected = false;
+                DnsEndPoint hostEntry = new DnsEndPoint(_consoleIP, _consolePort);
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                    DnsEndPoint hostEntry = new DnsEndPoint(_consoleIP, _consolePort);
+                SocketAsyncEventArgs socketEventArg = new SocketAsyncEventArgs();
+                socketEventArg.RemoteEndPoint = hostEntry;
+                socketEventArg.Completed += (o, args) =>
+                    {
+                        _pausingThread.Set();
+                    };
+                _pausingThread.Reset();
+                _socket.ConnectAsync(socketEventArg);
+                _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
 
-                    _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                // Send test command
+                _isConnected = IsConnected();
 
-                    SocketAsyncEventArgs socketEventArg = new SocketAsyncEventArgs();
-                    socketEventArg.RemoteEndPoint = hostEntry;
-
-                    socketEventArg.Completed += (o, args) =>
-                        {
-                            if (args.SocketError == SocketError.Success)
-                            {
-                                response = args.SocketError.ToString();
-                                _isConnected = true;
-                            }
-                            else
-                                throw new Exception(response);
-
-                            _pausingThread.Set();
-                        };
-
-                    _pausingThread.Reset();
-                    _socket.ConnectAsync(socketEventArg);
-                    _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
-
-                    return true;
-                }
-                else
-                    return true;
+                return _isConnected;
             }
-            catch (Exception ex) { GenerateException(ex.Message); return false; }
+            else
+                return true;
         }
+        private bool IsConnected()
+        {
+            string command = "\r\n";
+            bool response = false;
+
+            SocketAsyncEventArgs socketEventArgs = new SocketAsyncEventArgs();
+            socketEventArgs.RemoteEndPoint = _socket.RemoteEndPoint;
+            socketEventArgs.UserToken = null;
+
+            socketEventArgs.Completed += (o, args) =>
+            {
+                if (args.SocketError == SocketError.Success)
+                    response = true;
+            };
+            byte[] commandBytes = Encoding.ASCII.ToBytes(command);
+            socketEventArgs.SetBuffer(commandBytes, 0, commandBytes.Length);
+
+            _pausingThread.Reset();
+            _socket.SendAsync(socketEventArgs);
+            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+
+            return response;
+        }
+
         public bool Disconnect()
         {
             try
@@ -112,39 +123,38 @@ namespace XDevKit
             catch { return false; }
         }
 
-        public void SendTextCommand(string command)
+        public void SendTextCommand(string command, bool includeConnectionTest = true)
         {
-            try
+            if (includeConnectionTest)
             {
                 if (!_isConnected)
                     Connect();
                 if (!_isConnected)
                     return;
-
-                command = command.ToUpper() + "\r\n";
-
-                SocketAsyncEventArgs socketEventArgs = new SocketAsyncEventArgs();
-                socketEventArgs.RemoteEndPoint = _socket.RemoteEndPoint;
-                socketEventArgs.UserToken = null;
-
-                socketEventArgs.Completed += (o, args) =>
-                    {
-                        if (args.SocketError == SocketError.Success)
-                        {
-                            string output = Encoding.ASCII.GetString(args.Buffer);
-                            _pausingThread.Set();
-                        }
-                        else
-                            throw new Exception(args.SocketError.ToString());
-                    };
-                byte[] commandBytes = Encoding.ASCII.ToBytes(command);
-                socketEventArgs.SetBuffer(commandBytes, 0, commandBytes.Length);
-
-                _pausingThread.Reset();
-                _socket.SendAsync(socketEventArgs);
-                _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
             }
-            catch (Exception ex) { GenerateException(ex.Message); }
+
+            command = command.ToUpper() + "\r\n";
+
+            SocketAsyncEventArgs socketEventArgs = new SocketAsyncEventArgs();
+            socketEventArgs.RemoteEndPoint = _socket.RemoteEndPoint;
+            socketEventArgs.UserToken = null;
+
+            socketEventArgs.Completed += (o, args) =>
+                {
+                    if (args.SocketError == SocketError.Success)
+                    {
+                        string output = Encoding.ASCII.GetString(args.Buffer);
+                        _pausingThread.Set();
+                    }
+                    else
+                        throw new Exception(args.SocketError.ToString());
+                };
+            byte[] commandBytes = Encoding.ASCII.ToBytes(command);
+            socketEventArgs.SetBuffer(commandBytes, 0, commandBytes.Length);
+
+            _pausingThread.Reset();
+            _socket.SendAsync(socketEventArgs);
+            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
         }
 
         public enum ResponseTypes
@@ -154,21 +164,24 @@ namespace XDevKit
             Multiline  = 202,
             OtherSingleLineidontevenknow = 420
         }
-        public string GetFromTextCommand(string command, string mustFind, bool canBeEmpty, ResponseTypes responseType)
+        public string GetFromTextCommand(string command, string mustFind, bool canBeEmpty, ResponseTypes responseType, bool includeConnectionTest = true)
         {
             try
             {
-                if (!_isConnected)
-                    Connect();
-                if (!_isConnected)
-                    return null;
+                if (includeConnectionTest)
+                {
+                    if (!_isConnected)
+                        Connect();
+                    if (!_isConnected)
+                        return null;
+                }
 
                 int retries = 0;
-                retry:
+            retry:
 
-                SendTextCommand(command);
+                SendTextCommand(command, includeConnectionTest);
 
-                string response = GetFromTextCommand();
+                string response = GetFromTextCommand(includeConnectionTest);
 
                 if (!response.StartsWith(((int)responseType).ToString() + "-"))
                     if (retries >= MAX_RETRY_COUNT)
@@ -183,7 +196,7 @@ namespace XDevKit
                 {
                     while (!response.EndsWith(".\r\n"))
                     {
-                        string newResponse = GetFromTextCommand();
+                        string newResponse = GetFromTextCommand(includeConnectionTest);
 
                         response += newResponse;
                     }
@@ -208,45 +221,41 @@ namespace XDevKit
 
                 return response;
             }
-            catch (Exception ex) { GenerateException(ex.Message); return null; }
+            catch { return null; }
         }
-        public string GetFromTextCommand()
+        public string GetFromTextCommand(bool includeConnectionTest = true)
         {
-            try
+            if (!_isConnected)
+                Connect();
+            if (!_isConnected)
+                return null;
+
+            string response = "";
+
+            SocketAsyncEventArgs socketEventArg = new SocketAsyncEventArgs();
+            socketEventArg.RemoteEndPoint = _socket.RemoteEndPoint;
+            socketEventArg.UserToken = null;
+
+            socketEventArg.SetBuffer(new Byte[MAX_BUFFER_SIZE], 0, MAX_BUFFER_SIZE);
+
+            socketEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object s, SocketAsyncEventArgs e)
             {
-                if (!_isConnected)
-                    Connect();
-                if (!_isConnected)
-                    return null;
-
-                string response = "";
-
-                SocketAsyncEventArgs socketEventArg = new SocketAsyncEventArgs();
-                socketEventArg.RemoteEndPoint = _socket.RemoteEndPoint;
-                socketEventArg.UserToken = null;
-
-                socketEventArg.SetBuffer(new Byte[MAX_BUFFER_SIZE], 0, MAX_BUFFER_SIZE);
-
-                socketEventArg.Completed += new EventHandler<SocketAsyncEventArgs>(delegate(object s, SocketAsyncEventArgs e)
+                if (e.SocketError == SocketError.Success)
                 {
-                    if (e.SocketError == SocketError.Success)
-                    {
-                        response = Encoding.ASCII.GetString(e.Buffer);
-                        response = response.Trim('\0');
-                    }
-                    else
-                        throw new Exception(e.SocketError.ToString());
+                    response = Encoding.ASCII.GetString(e.Buffer);
+                    response = response.Trim('\0');
+                }
+                else
+                    throw new Exception(e.SocketError.ToString());
 
-                    _pausingThread.Set();
-                });
+                _pausingThread.Set();
+            });
 
-                _pausingThread.Reset();
-                _socket.ReceiveAsync(socketEventArg);
-                _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+            _pausingThread.Reset();
+            _socket.ReceiveAsync(socketEventArg);
+            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
 
-                return response;
-            }
-            catch (Exception ex) { GenerateException(ex.Message); return null; }
+            return response;
         }
 
         #region Console Info
@@ -406,12 +415,14 @@ namespace XDevKit
         {
             IList<DirectoryObject> direcObject = new List<DirectoryObject>();
 
-            string[] response = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline).Replace("\r", "").Split('\n');
+            string response = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline);
 
-            if (response == null || response[0] == "")
+            if (response == null || response == "")
                 throw new Exception();
 
-            foreach (string part in response)
+            string[] responseA = response.Replace("\r", "").Split('\n');
+
+            foreach (string part in responseA)
             {
                 if (part.StartsWith("name="))
                 {
@@ -456,13 +467,15 @@ namespace XDevKit
         }
         public void LaunchXEX(string xexPath, string xexDirectory)
         {
-            SendTextCommand(string.Format("magicboot title=\"{0}\" directory=\"{1}\"", xexPath, xexDirectory));
+            try
+            {
+                SendTextCommand(string.Format("magicboot title=\"{0}\" directory=\"{1}\"", xexPath, xexDirectory));
+            }
+            catch
+            {
+                MessageBox.Show("Unable to launch xex.", "oops :(", MessageBoxButton.OK);
+            }
         }
         #endregion
-
-        private void GenerateException(string errorMessage)
-        {
-            MessageBox.Show("Unable to perform task", errorMessage, MessageBoxButton.OK);
-        }
     }
 }
