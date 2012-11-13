@@ -415,7 +415,18 @@ namespace XDevKit
         {
             IList<DirectoryObject> direcObject = new List<DirectoryObject>();
 
-            string response = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline);
+            string response = null;
+            for(int i=0;i<MAX_RETRY_COUNT;i++)
+            {
+                string response0 = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline);
+                string response1 = GetFromTextCommand(string.Format("dirlist name=\"{0}\"", directory), "sizelo=", true, ResponseTypes.Multiline);
+
+                if (response0 == response1)
+                {
+                    response = response0;
+                    break;
+                }
+            }
 
             if (response == null || response == "")
                 throw new Exception();

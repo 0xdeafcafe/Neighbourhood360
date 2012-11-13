@@ -57,6 +57,8 @@ namespace Neighbourhood_WindowsPhone.Pages
         }
         private void LoadDirectory()
         {
+            lbFiles.IsEnabled = false;
+
             string currentDirectory = directoryHistory[directoryHistory.Count - 1];
 
             lblFullPath.Text = currentDirectory;
@@ -71,6 +73,8 @@ namespace Neighbourhood_WindowsPhone.Pages
                 else
                     lbFiles.Items.Add(new Controls.DriveFile(directoryObject));
             }
+
+            lbFiles.IsEnabled = true;
         }
 
         private void lbFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -83,7 +87,7 @@ namespace Neighbourhood_WindowsPhone.Pages
                 else
                     directoryObject = (XBDM.DirectoryObject)((Controls.DriveFolder)lbFiles.SelectedItem).Tag;
 
-                // DODIS
+                // DO DIS
                 if (directoryObject.IsDirectory)
                 {
                     directoryHistory.Add(directoryHistory[directoryHistory.Count - 1] + directoryObject.Name + "\\");
