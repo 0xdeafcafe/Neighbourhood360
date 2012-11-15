@@ -105,6 +105,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AboutNeighbourhood.xaml.cs">
+      <DependentUpon>AboutNeighbourhood.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CommandHome.xaml.cs">
       <DependentUpon>CommandHome.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AboutNeighbourhood.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

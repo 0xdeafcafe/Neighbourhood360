@@ -108,6 +108,7 @@ namespace Neighbourhood_WindowsPhone
                 // And then Proceed
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
+                    App.SendFromStartup = true;
                     NavigationService.Navigate(new Uri("/Pages/CommandHome.xaml", UriKind.Relative));
                 }));
             }

@@ -14,6 +14,8 @@ namespace Neighbourhood_WindowsPhone
     public partial class App : Application
     {
         #region TempStorage
+        public static bool SendFromStartup = false;
+
         public static XDevKit.XBDM.Drive TempStorageDRIVE;
         #endregion
 

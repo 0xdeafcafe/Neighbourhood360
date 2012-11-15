@@ -50,7 +50,7 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,20">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/360Icons/icon_white_tiny.png" Margin="0,10,0,0" Height="70" />
-                <TextBlock Text="connection" Margin="0,-3,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextTitle1Style}" FontSize="57"/>
+                <TextBlock Text="connection" Margin="5,0,0,0" VerticalAlignment="Top" Style="{StaticResource PhoneTextTitle1Style}" FontSize="57"/>
             </StackPanel>
         </StackPanel>
 

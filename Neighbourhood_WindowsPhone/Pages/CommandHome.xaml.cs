@@ -29,6 +29,12 @@ namespace Neighbourhood_WindowsPhone.Pages
         {
             base.OnNavigatedTo(e);
 
+            if (App.SendFromStartup)
+            {
+                NavigationService.RemoveBackEntry();
+                App.SendFromStartup = false;
+            }
+
             _xbdm = App.XBDM;
             _xbdm.ConsoleIP = DEV_IP;
 
@@ -125,7 +131,7 @@ namespace Neighbourhood_WindowsPhone.Pages
 
         private void appbarAbout_Click(object sender, EventArgs e)
         {
-
+            NavigationService.Navigate(new Uri("/Pages/AboutNeighbourhood.xaml", UriKind.Relative));
         }
     }
 }
