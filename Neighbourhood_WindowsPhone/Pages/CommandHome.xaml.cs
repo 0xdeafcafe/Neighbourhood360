@@ -122,5 +122,10 @@ namespace Neighbourhood_WindowsPhone.Pages
                 NavigationService.Navigate(new Uri("/Pages/DriveExplorer.xaml", UriKind.Relative));
             }
         }
+
+        private void appbarAbout_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

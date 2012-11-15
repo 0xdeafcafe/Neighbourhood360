@@ -223,7 +223,7 @@ namespace XDevKit
             }
             catch { return null; }
         }
-        public string GetFromTextCommand(bool includeConnectionTest = true)
+        private string GetFromTextCommand(bool includeConnectionTest = true)
         {
             if (!_isConnected)
                 Connect();

@@ -64,18 +64,14 @@
                 <Grid/>
             </phone:PanoramaItem>
 
-
-            <!--Panorama item five-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="about">
-                <Grid>
-                    
-                </Grid>
-            </phone:PanoramaItem>
         </phone:Panorama>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="appbarAbout" IsEnabled="True" Text="About" Click="appbarAbout_Click" />
+            </shell:ApplicationBar.MenuItems>
             <shell:ApplicationBarIconButton x:Name="appbarRefresh" Text="Refresh" IconUri="/Assets/AppBar/refresh.png" Click="appbarRefresh_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
