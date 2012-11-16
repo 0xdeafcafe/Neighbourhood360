@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Neighbourhood_WindowsPhone.Resources
 {
-    public class CredentialsVault
+    public class CredentialsVault : IVault
     {
         private IsolatedStorageSettings applicationSettings = IsolatedStorageSettings.ApplicationSettings;
         

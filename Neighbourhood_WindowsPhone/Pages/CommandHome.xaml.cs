@@ -12,33 +12,41 @@ using System.Windows.Media;
 using System.Threading.Tasks;
 using Neighbourhood_WindowsPhone.Controls;
 using System.Threading;
+using Neighbourhood_WindowsPhone.ViewModels;
 
 namespace Neighbourhood_WindowsPhone.Pages
 {
     public partial class CommandHome : PhoneApplicationPage
     {
-        private const string DEV_IP = "192.168.1.85";
         private XBDM _xbdm = new XBDM();
+        private CommandHomeViewModel PageViewModel = new CommandHomeViewModel();
 
         public CommandHome()
         {
             InitializeComponent();
+
+            this.DataContext = PageViewModel;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            if (App.SendFromStartup)
+            // Check if we need to remove a page from the Backstack
+            if (App.RemovePageFromBackstack)
             {
                 NavigationService.RemoveBackEntry();
-                App.SendFromStartup = false;
+                App.RemovePageFromBackstack = false;
             }
 
+            // Update XBDM
             _xbdm = App.XBDM;
-            _xbdm.ConsoleIP = DEV_IP;
 
+            // Refresh UI
             appbarRefresh_Click(null, null);
+
+            // Update Favourites
+            PageViewModel.UpdateFavourites();
         }
 
         private void UpdateConsoleInfo()
@@ -126,6 +134,13 @@ namespace Neighbourhood_WindowsPhone.Pages
             {
                 App.TempStorageDRIVE = (XBDM.Drive)((FilesystemDrive)(lbDrives.SelectedItem)).Tag;
                 NavigationService.Navigate(new Uri("/Pages/DriveExplorer.xaml", UriKind.Relative));
+            }
+        }
+        private void lbFavs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lbFavs.SelectedItem != null)
+            {
+
             }
         }
 

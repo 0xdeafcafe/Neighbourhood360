@@ -18,7 +18,7 @@ namespace XDevKit
     public class XBDM
     {
         private Socket _socket = null;
-        private const int TIMEOUT_MILLISECONDS = 10000; // 7000 milliseconds
+        private const int CONNECTION_TIMEOUT_MILLISECONDS = 10000; // 7000 milliseconds
         private const int MAX_BUFFER_SIZE = 1020; // 1 kb
         private const int MAX_RETRY_COUNT = 5;
 
@@ -73,7 +73,7 @@ namespace XDevKit
                     };
                 _pausingThread.Reset();
                 _socket.ConnectAsync(socketEventArg);
-                _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+                _pausingThread.WaitOne(CONNECTION_TIMEOUT_MILLISECONDS);
 
                 // Send test command
                 _isConnected = IsConnected();
@@ -102,7 +102,7 @@ namespace XDevKit
 
             _pausingThread.Reset();
             _socket.SendAsync(socketEventArgs);
-            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+            _pausingThread.WaitOne(CONNECTION_TIMEOUT_MILLISECONDS);
 
             return response;
         }
@@ -154,7 +154,7 @@ namespace XDevKit
 
             _pausingThread.Reset();
             _socket.SendAsync(socketEventArgs);
-            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+            _pausingThread.WaitOne(CONNECTION_TIMEOUT_MILLISECONDS);
         }
 
         public enum ResponseTypes
@@ -253,7 +253,7 @@ namespace XDevKit
 
             _pausingThread.Reset();
             _socket.ReceiveAsync(socketEventArg);
-            _pausingThread.WaitOne(TIMEOUT_MILLISECONDS);
+            _pausingThread.WaitOne(CONNECTION_TIMEOUT_MILLISECONDS);
 
             return response;
         }

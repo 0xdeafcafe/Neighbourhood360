@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -33,10 +34,43 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,40,12,0">
-            <ListBox x:Name="lbFiles" SelectionChanged="lbFiles_SelectionChanged" Margin="-10,0,10,0">
+            <ListBox x:Name="lbFiles" 
+                     SelectionChanged="lbFiles_SelectionChanged" Margin="-10,0,10,0" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackPanel Orientation="Horizontal" Margin="20,5,0,5">
+                                <Image VerticalAlignment="Center" Height="60" Width="60" Source="/Assets/360Icons/icon_white_small.png" />
+
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" Margin="20,-4,0,0"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="24" TextTrimming="WordEllipsis"/>
+
+                                    <TextBlock Text="{Binding FriendlySize}" Margin="20,-4,0,0"
+                                        VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="18" TextTrimming="WordEllipsis" Foreground="{StaticResource PhoneAccentBrush}"
+                                        Visibility="{Binding ShowSize}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- other content of your listitem goes here-->
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu x:Name="fileContextMenu" Opened="fileContextMenu_Opened" Loaded="fileContextMenu_Loaded" >
+                                    <toolkit:MenuItem x:Name="contextFav" Header="Favourite" Click="contextFav_Click" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
                 
             </ListBox>
         </Grid>
     </Grid>
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+            <shell:ApplicationBarIconButton x:Name="appbarRefresh" Text="Refresh" IconUri="/Assets/AppBar/refresh.png" Click="appbarRefresh_Click"/>
+            <shell:ApplicationBarIconButton x:Name="appbarGoBack" Text="Go Back" IconUri="/Assets/AppBar/cancel.png" Click="appbarGoBack_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

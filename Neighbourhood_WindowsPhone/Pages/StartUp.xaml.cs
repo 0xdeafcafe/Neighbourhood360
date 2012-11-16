@@ -48,7 +48,7 @@ namespace Neighbourhood_WindowsPhone
                 ProgressIndicator progIndicator = new ProgressIndicator();
                 progIndicator.IsIndeterminate = true;
                 progIndicator.IsVisible = true;
-                progIndicator.Text = "Connected to console...";
+                progIndicator.Text = "Connecting to console...";
                 SystemTray.SetProgressIndicator(this, progIndicator);
 
                 // Get Port and IP from UI
@@ -108,7 +108,7 @@ namespace Neighbourhood_WindowsPhone
                 // And then Proceed
                 Dispatcher.BeginInvoke(new Action(delegate
                 {
-                    App.SendFromStartup = true;
+                    App.RemovePageFromBackstack = true;
                     NavigationService.Navigate(new Uri("/Pages/CommandHome.xaml", UriKind.Relative));
                 }));
             }

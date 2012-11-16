@@ -60,8 +60,18 @@
             </phone:PanoramaItem>
 
             <!--Panorama item four-->
+            <phone:PanoramaItem Margin="0,180,0,0" Header="favourites">
+                <Grid>
+                    <ListBox x:Name="lbFavs" toolkit:TiltEffect.IsTiltEnabled="True"
+                             SelectionChanged="lbFavs_SelectionChanged">
+                    
+                    </ListBox>
+                </Grid>
+            </phone:PanoramaItem>
+            
+            <!--Panorama item five-->
             <phone:PanoramaItem Margin="0,180,0,0" Header="game tools">
-                <Grid/>
+                <Grid />
             </phone:PanoramaItem>
 
         </phone:Panorama>

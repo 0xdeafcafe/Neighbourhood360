@@ -14,7 +14,7 @@ namespace Neighbourhood_WindowsPhone
     public partial class App : Application
     {
         #region TempStorage
-        public static bool SendFromStartup = false;
+        public static bool RemovePageFromBackstack = false;
 
         public static XDevKit.XBDM.Drive TempStorageDRIVE;
         #endregion
@@ -28,6 +28,11 @@ namespace Neighbourhood_WindowsPhone
         /// Provides a secure and stable location to store user data such as Console IP and Port
         /// </summary>
         public static CredentialsVault CredentialVault = new CredentialsVault();
+
+        /// <summary>
+        /// Provides a secure and stable loction to store user options, prefrences and favorites
+        /// </summary>
+        public static StorageVault StorageVault = new StorageVault();
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -78,6 +83,10 @@ namespace Neighbourhood_WindowsPhone
             // Setup the Credential Vault
             CredentialVault = new CredentialsVault();
             CredentialVault.GetSettings();
+
+            // Setup the Storage Vault
+            StorageVault = new StorageVault();
+            StorageVault.GetSettings();
         }
 
         // Code to execute when the application is launching (eg, from Start)
@@ -112,6 +121,9 @@ namespace Neighbourhood_WindowsPhone
 
             // Update Credential Vault
             App.CredentialVault.GetSettings();
+
+            // Update Storage Vault
+            App.StorageVault.GetSettings();
 
             // Check if an IP is stored
             bool credsFound = false;
