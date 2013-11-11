@@ -18,7 +18,7 @@ namespace XDevKit
     public class XBDM
     {
         private Socket _socket = null;
-        private const int CONNECTION_TIMEOUT_MILLISECONDS = 10000; // 7000 milliseconds
+        private const int CONNECTION_TIMEOUT_MILLISECONDS = 10000; // 10,000 milliseconds
         private const int MAX_BUFFER_SIZE = 1020; // 1 kb
         private const int MAX_RETRY_COUNT = 5;
 
