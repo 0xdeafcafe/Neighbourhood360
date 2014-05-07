@@ -139,19 +139,19 @@ namespace Neighbourhood_WindowsPhone
             }));
         }
 
-	    private void txtIP_OnKeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.Key == Key.Enter)
-				txtPort.Focus();
-	    }
+        private void txtIP_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                txtPort.Focus();
+        }
 
-	    private void txtPort_OnKeyDown(object sender, KeyEventArgs e)
-		{
-		    if (e.Key == Key.Enter)
-		    {
-			    Focus();
-			    btnConnect_Click(null, null);
-		    }
-		}
+        private void txtPort_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Focus();
+                btnConnect_Click(null, null);
+            }
+        }
     }
 }
