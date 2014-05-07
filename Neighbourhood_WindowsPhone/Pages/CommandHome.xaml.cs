@@ -96,6 +96,11 @@ namespace Neighbourhood_WindowsPhone.Pages
             _xbdm.SendTextCommand("magicboot");
         }
 
+		private void btnCommandActiveTitleReboot_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand(string.Format("magicboot title=\"{0}\" directory=\"{1}\"", _xbdm.ConsoleData.ActiveTitle, _xbdm.ConsoleData.ActiveTitle.Substring(0, _xbdm.ConsoleData.ActiveTitle.LastIndexOf("\\", StringComparison.Ordinal))));
+		}
+
         private void appbarRefresh_Click(object sender, EventArgs e)
         {
             ThreadStart ts = delegate

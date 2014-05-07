@@ -58,10 +58,10 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel Margin="40,40,20,40">
                 <TextBlock Text="Debug Xbox 360 IP address:" />
-                <TextBox x:Name="txtIP" />
+                <TextBox x:Name="txtIP" KeyDown="txtIP_OnKeyDown" />
 
                 <TextBlock Margin="0,20,0,0" TextWrapping="Wrap" Text="Debug Xbox 360 Port (Ignore this, if you don't know what it is):" />
-                <TextBox x:Name="txtPort" Text="730" />
+                <TextBox x:Name="txtPort" Text="730" KeyDown="txtPort_OnKeyDown" />
                 
                 <Button x:Name="btnConnect" Content="Connect" Style="{StaticResource RoundMetroButton}" Height="150" 
                         Width="150" VerticalAlignment="Center" Margin="-20,100,0,0" HorizontalAlignment="Center" 

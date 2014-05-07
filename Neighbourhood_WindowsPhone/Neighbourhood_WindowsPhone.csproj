@@ -115,6 +115,7 @@
     <Compile Include="Resources\CredentialsVault.cs" />
     <Compile Include="Resources\IVault.cs" />
     <Compile Include="Resources\StorageVault.cs" />
+    <Compile Include="ViewModels\CommandHomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

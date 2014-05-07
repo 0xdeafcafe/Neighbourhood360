@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -137,5 +138,20 @@ namespace Neighbourhood_WindowsPhone
                 _isConnectingBusy = false;
             }));
         }
+
+	    private void txtIP_OnKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+				txtPort.Focus();
+	    }
+
+	    private void txtPort_OnKeyDown(object sender, KeyEventArgs e)
+		{
+		    if (e.Key == Key.Enter)
+		    {
+			    Focus();
+			    btnConnect_Click(null, null);
+		    }
+		}
     }
 }

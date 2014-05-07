@@ -39,8 +39,9 @@
             <!--Panorama item two-->
             <phone:PanoramaItem Margin="0,180,0,0" Header="commands">
                 <ScrollViewer>
-                    <toolkit:WrapPanel Margin="0" toolkit:TiltEffect.IsTiltEnabled="True">
-                        <Button x:Name="btnCommandTitleReboot" Content="Reboot (Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandTitleReboot_Click" />
+					<toolkit:WrapPanel Margin="0" toolkit:TiltEffect.IsTiltEnabled="True">
+						<Button x:Name="btnCommandActiveTitleReboot" Content="Reboot (Active Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandActiveTitleReboot_Click" />
+						<Button x:Name="btnCommandTitleReboot" Content="Reboot (Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandTitleReboot_Click" />
                         <Button x:Name="btnCommandColdReboot" Content="Reboot (Cold)" Style="{StaticResource MetroTileButton}" Click="btnCommandColdReboot_Click" />
                         <Button x:Name="btnCommandFreeze" Content="Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandFreeze_Click" />
                         <Button x:Name="btnCommandUnFreeze" Content="Un Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandUnFreeze_Click" />
