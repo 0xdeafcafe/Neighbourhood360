@@ -1,90 +1,90 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="Neighbourhood_WindowsPhone.Pages.CommandHome"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="False">
+	x:Class="Neighbourhood_WindowsPhone.Pages.CommandHome"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait"  Orientation="Portrait"
+	shell:SystemTray.IsVisible="False">
 
-    <!--LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot">
-        <phone:Panorama Title="">
-            <phone:Panorama.Background>
-                <ImageBrush Stretch="None" ImageSource="/Assets/Pages/CommandHome/pano_bg.png"/>
-            </phone:Panorama.Background>
+	<!--LayoutRoot contains the root grid where all other page content is placed-->
+	<Grid x:Name="LayoutRoot">
+		<phone:Panorama Title="">
+			<phone:Panorama.Background>
+				<ImageBrush Stretch="None" ImageSource="/Assets/Pages/CommandHome/pano_bg.png"/>
+			</phone:Panorama.Background>
 
-            <!--Panorama item one-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="xbox">
-                <StackPanel Margin="12,0,0,0">
-                    <TextBlock x:Name="lblConsoleDebugName" Text="&lt;console_name&gt;" FontSize="40" />
-                    <TextBlock x:Name="lblConsoleType" Text="&lt;console_type&gt;" FontSize="24" />
+			<!--Panorama item one-->
+			<phone:PanoramaItem Margin="0,180,0,0" Header="xbox">
+				<StackPanel Margin="12,0,0,0">
+					<TextBlock x:Name="lblConsoleDebugName" Text="&lt;console_name&gt;" FontSize="40" />
+					<TextBlock x:Name="lblConsoleType" Text="&lt;console_type&gt;" FontSize="24" />
 
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Console Unlock Status:" FontSize="22" />
-                        <TextBlock x:Name="lblConsoleUnlockStatus" Margin="15,1,0,0" Text="&lt;console_unlock_status&gt;" FontSize="22" />
-                    </StackPanel>
-                    
-                    <TextBlock x:Name="lblConsoleActiveTitle" Margin="0,40,0,0" Text="&lt;console_active_title&gt;" FontSize="20" TextWrapping="Wrap" />
-                </StackPanel>
-            </phone:PanoramaItem>
-            
-            <!--Panorama item two-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="commands">
-                <ScrollViewer>
-                    <toolkit:WrapPanel Margin="0" toolkit:TiltEffect.IsTiltEnabled="True">
-                        <Button x:Name="btnCommandActiveTitleReboot" Content="Reboot (Active Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandActiveTitleReboot_Click" />
-                        <Button x:Name="btnCommandTitleReboot" Content="Reboot (Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandTitleReboot_Click" />
-                        <Button x:Name="btnCommandColdReboot" Content="Reboot (Cold)" Style="{StaticResource MetroTileButton}" Click="btnCommandColdReboot_Click" />
-                        <Button x:Name="btnCommandFreeze" Content="Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandFreeze_Click" />
-                        <Button x:Name="btnCommandUnFreeze" Content="Un Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandUnFreeze_Click" />
-                        <Button x:Name="btnCommandScreenshot" Content="Screenshot" Style="{StaticResource MetroTileButton}" IsEnabled="False" />
-                    </toolkit:WrapPanel>
-                </ScrollViewer>
-            </phone:PanoramaItem>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Console Unlock Status:" FontSize="22" />
+						<TextBlock x:Name="lblConsoleUnlockStatus" Margin="15,1,0,0" Text="&lt;console_unlock_status&gt;" FontSize="22" />
+					</StackPanel>
+					
+					<TextBlock x:Name="lblConsoleActiveTitle" Margin="0,40,0,0" Text="&lt;console_active_title&gt;" FontSize="20" TextWrapping="Wrap" />
+				</StackPanel>
+			</phone:PanoramaItem>
+			
+			<!--Panorama item two-->
+			<phone:PanoramaItem Margin="0,180,0,0" Header="commands">
+				<ScrollViewer>
+					<toolkit:WrapPanel Margin="0" toolkit:TiltEffect.IsTiltEnabled="True">
+						<Button x:Name="btnCommandActiveTitleReboot" Content="Reboot (Active Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandActiveTitleReboot_Click" />
+						<Button x:Name="btnCommandTitleReboot" Content="Reboot (Title)" Style="{StaticResource MetroTileButton}" Click="btnCommandTitleReboot_Click" />
+						<Button x:Name="btnCommandColdReboot" Content="Reboot (Cold)" Style="{StaticResource MetroTileButton}" Click="btnCommandColdReboot_Click" />
+						<Button x:Name="btnCommandFreeze" Content="Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandFreeze_Click" />
+						<Button x:Name="btnCommandUnFreeze" Content="Un Freeze" Style="{StaticResource MetroTileButton}" Click="btnCommandUnFreeze_Click" />
+						<Button x:Name="btnCommandScreenshot" Content="Screenshot" Style="{StaticResource MetroTileButton}" IsEnabled="False" />
+					</toolkit:WrapPanel>
+				</ScrollViewer>
+			</phone:PanoramaItem>
 
-            <!--Panorama item three-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="filesystem">
-                <Grid>
-                    <ListBox x:Name="lbDrives" toolkit:TiltEffect.IsTiltEnabled="True"
-                             SelectionChanged="lbDrives_SelectionChanged">
+			<!--Panorama item three-->
+			<phone:PanoramaItem Margin="0,180,0,0" Header="filesystem">
+				<Grid>
+					<ListBox x:Name="lbDrives" toolkit:TiltEffect.IsTiltEnabled="True"
+							 SelectionChanged="lbDrives_SelectionChanged">
 
-                    </ListBox>
-                </Grid>
-            </phone:PanoramaItem>
+					</ListBox>
+				</Grid>
+			</phone:PanoramaItem>
 
-            <!--Panorama item four-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="favourites">
-                <Grid>
-                    <ListBox x:Name="lbFavs" toolkit:TiltEffect.IsTiltEnabled="True"
-                             SelectionChanged="lbFavs_SelectionChanged">
-                    
-                    </ListBox>
-                </Grid>
-            </phone:PanoramaItem>
-            
-            <!--Panorama item five-->
-            <phone:PanoramaItem Margin="0,180,0,0" Header="game tools">
-                <Grid />
-            </phone:PanoramaItem>
+			<!--Panorama item four-->
+			<phone:PanoramaItem Margin="0,180,0,0" Header="favourites">
+				<Grid>
+					<ListBox x:Name="lbFavs" toolkit:TiltEffect.IsTiltEnabled="True"
+							 SelectionChanged="lbFavs_SelectionChanged">
+					
+					</ListBox>
+				</Grid>
+			</phone:PanoramaItem>
+			
+			<!--Panorama item five-->
+			<phone:PanoramaItem Margin="0,180,0,0" Header="game tools">
+				<Grid />
+			</phone:PanoramaItem>
 
-        </phone:Panorama>
-    </Grid>
+		</phone:Panorama>
+	</Grid>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="appbarAbout" IsEnabled="True" Text="About" Click="appbarAbout_Click" />
-            </shell:ApplicationBar.MenuItems>
-            <shell:ApplicationBarIconButton x:Name="appbarRefresh" Text="Refresh" IconUri="/Assets/AppBar/refresh.png" Click="appbarRefresh_Click"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+			<shell:ApplicationBar.MenuItems>
+				<shell:ApplicationBarMenuItem x:Name="appbarAbout" IsEnabled="True" Text="About" Click="appbarAbout_Click" />
+			</shell:ApplicationBar.MenuItems>
+			<shell:ApplicationBarIconButton x:Name="appbarRefresh" Text="Refresh" IconUri="/Assets/AppBar/refresh.png" Click="appbarRefresh_Click"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>
