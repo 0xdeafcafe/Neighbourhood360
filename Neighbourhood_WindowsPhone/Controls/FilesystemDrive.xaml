@@ -1,34 +1,34 @@
 ﻿<UserControl x:Class="Neighbourhood_WindowsPhone.Controls.FilesystemDrive"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    mc:Ignorable="d"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    Height="160" d:DesignWidth="420"
-    toolkit:TiltEffect.IsTiltEnabled="True">
-    
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <TextBlock x:Name="lblDriveName" Text="Game Development Volume" Margin="10,10,0,0"
-                   VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" TextTrimming="WordEllipsis"/>
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+	mc:Ignorable="d"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	Height="160" d:DesignWidth="420"
+	toolkit:TiltEffect.IsTiltEnabled="True">
+	
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<TextBlock x:Name="lblDriveName" Text="Game Development Volume" Margin="10,10,0,0"
+				   VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="22" TextTrimming="WordEllipsis"/>
 
-        <StackPanel Orientation="Horizontal" Margin="10,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <TextBlock x:Name="lblDrivePath" Text="E:\"
-                    Foreground="{StaticResource PhoneAccentBrush}" />
-        </StackPanel>
-        
-        <StackPanel VerticalAlignment="Top" Margin="10,80,0,0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Drive Capacity:" FontSize="16" />
-                <TextBlock x:Name="lblDriveCapacity" Margin="20,0,0,0" Text="420gb (alot of bytes)" FontSize="16" Foreground="{StaticResource PhoneAccentBrush}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Drive Free Space:" FontSize="16" />
-                <TextBlock x:Name="lblDriveFreeSpace" Margin="20,0,0,0" Text="69gb (alot of bytes)" FontSize="16" Foreground="{StaticResource PhoneAccentBrush}" />
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+		<StackPanel Orientation="Horizontal" Margin="10,40,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+			<TextBlock x:Name="lblDrivePath" Text="E:\"
+					Foreground="{StaticResource PhoneAccentBrush}" />
+		</StackPanel>
+		
+		<StackPanel VerticalAlignment="Top" Margin="10,80,0,0">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Drive Capacity:" FontSize="16" />
+				<TextBlock x:Name="lblDriveCapacity" Margin="20,0,0,0" Text="420gb (alot of bytes)" FontSize="16" Foreground="{StaticResource PhoneAccentBrush}" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="Drive Free Space:" FontSize="16" />
+				<TextBlock x:Name="lblDriveFreeSpace" Margin="20,0,0,0" Text="69gb (alot of bytes)" FontSize="16" Foreground="{StaticResource PhoneAccentBrush}" />
+			</StackPanel>
+		</StackPanel>
+	</Grid>
 </UserControl>

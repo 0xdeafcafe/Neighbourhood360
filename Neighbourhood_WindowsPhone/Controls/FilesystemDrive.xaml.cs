@@ -11,19 +11,19 @@ using XDevKit;
 
 namespace Neighbourhood_WindowsPhone.Controls
 {
-    public partial class FilesystemDrive : UserControl
-    {
-        public FilesystemDrive(XBDM.Drive drive)
-        {
-            InitializeComponent();
+	public partial class FilesystemDrive : UserControl
+	{
+		public FilesystemDrive(XBDM.Drive drive)
+		{
+			InitializeComponent();
 
-            lblDriveName.Text = drive.DriveFriendlyName;
-            lblDrivePath.Text = drive.DrivePath;
-            lblDriveFreeSpace.Text = XDevKit.Helpers.GetFriendlySizeName(drive.FreeSpace) + " (" + drive.FreeSpace.ToString() + " bytes)";
-            lblDriveCapacity.Text = XDevKit.Helpers.GetFriendlySizeName(drive.TotalSpace) + " (" + drive.TotalSpace.ToString() + " bytes)";
+			lblDriveName.Text = drive.DriveFriendlyName;
+			lblDrivePath.Text = drive.DrivePath;
+			lblDriveFreeSpace.Text = XDevKit.Helpers.GetFriendlySizeName(drive.FreeSpace) + " (" + drive.FreeSpace.ToString() + " bytes)";
+			lblDriveCapacity.Text = XDevKit.Helpers.GetFriendlySizeName(drive.TotalSpace) + " (" + drive.TotalSpace.ToString() + " bytes)";
 
-            // Save Tag
-            this.Tag = drive;
-        }
-    }
+			// Save Tag
+			this.Tag = drive;
+		}
+	}
 }

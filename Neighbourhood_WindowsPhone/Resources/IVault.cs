@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Neighbourhood_WindowsPhone.Resources
 {
-    public interface IVault
-    {
-        void GetSettings();
-        void SaveSettings();
-    }
+	public interface IVault
+	{
+		void GetSettings();
+		void SaveSettings();
+	}
 }

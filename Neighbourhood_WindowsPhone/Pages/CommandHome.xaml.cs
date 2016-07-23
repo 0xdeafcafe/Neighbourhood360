@@ -16,142 +16,142 @@ using Neighbourhood_WindowsPhone.ViewModels;
 
 namespace Neighbourhood_WindowsPhone.Pages
 {
-    public partial class CommandHome : PhoneApplicationPage
-    {
-        private XBDM _xbdm = new XBDM();
-        private CommandHomeViewModel PageViewModel = new CommandHomeViewModel();
+	public partial class CommandHome : PhoneApplicationPage
+	{
+		private XBDM _xbdm = new XBDM();
+		private CommandHomeViewModel PageViewModel = new CommandHomeViewModel();
 
-        public CommandHome()
-        {
-            InitializeComponent();
+		public CommandHome()
+		{
+			InitializeComponent();
 
-            this.DataContext = PageViewModel;
-        }
+			this.DataContext = PageViewModel;
+		}
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
 
-            // Check if we need to remove a page from the Backstack
-            if (App.RemovePageFromBackstack)
-            {
-                NavigationService.RemoveBackEntry();
-                App.RemovePageFromBackstack = false;
-            }
+			// Check if we need to remove a page from the Backstack
+			if (App.RemovePageFromBackstack)
+			{
+				NavigationService.RemoveBackEntry();
+				App.RemovePageFromBackstack = false;
+			}
 
-            // Update XBDM
-            _xbdm = App.XBDM;
+			// Update XBDM
+			_xbdm = App.XBDM;
 
-            // Refresh UI
-            appbarRefresh_Click(null, null);
+			// Refresh UI
+			appbarRefresh_Click(null, null);
 
-            // Update Favourites
-            PageViewModel.UpdateFavourites();
-        }
+			// Update Favourites
+			PageViewModel.UpdateFavourites();
+		}
 
-        private void UpdateConsoleInfo()
-        {
-            _xbdm.UpdateConsoleInfo();
+		private void UpdateConsoleInfo()
+		{
+			_xbdm.UpdateConsoleInfo();
 
-            Dispatcher.BeginInvoke(new Action(delegate
-                {
-                    lblConsoleDebugName.Text = _xbdm.ConsoleData.ConsoleDebugName;
-                    lblConsoleActiveTitle.Text = _xbdm.ConsoleData.ActiveTitle;
-                    lblConsoleType.Text = _xbdm.ConsoleData.ConsoleType;
+			Dispatcher.BeginInvoke(new Action(delegate
+				{
+					lblConsoleDebugName.Text = _xbdm.ConsoleData.ConsoleDebugName;
+					lblConsoleActiveTitle.Text = _xbdm.ConsoleData.ActiveTitle;
+					lblConsoleType.Text = _xbdm.ConsoleData.ConsoleType;
 
-                    lblConsoleUnlockStatus.Text = _xbdm.ConsoleData.IsLocked ? "Locked" : "Unlocked";
-                    if (_xbdm.ConsoleData.IsLocked)
-                        lblConsoleUnlockStatus.Foreground = (Brush)new SolidColorBrush(Colors.Red);
-                    else
-                        lblConsoleUnlockStatus.Foreground = (Brush)new SolidColorBrush(Colors.Green);
-                }));
-        }
-        private void UpdateDriveList()
-        {
-            _xbdm.GetDriveList();
+					lblConsoleUnlockStatus.Text = _xbdm.ConsoleData.IsLocked ? "Locked" : "Unlocked";
+					if (_xbdm.ConsoleData.IsLocked)
+						lblConsoleUnlockStatus.Foreground = (Brush)new SolidColorBrush(Colors.Red);
+					else
+						lblConsoleUnlockStatus.Foreground = (Brush)new SolidColorBrush(Colors.Green);
+				}));
+		}
+		private void UpdateDriveList()
+		{
+			_xbdm.GetDriveList();
 
-            Dispatcher.BeginInvoke(new Action(delegate
-                {
-                    lbDrives.Items.Clear();
-                    foreach (XBDM.Drive drive in _xbdm.ConsoleDrives)
-                        lbDrives.Items.Add(new FilesystemDrive(drive));
-                }));
-        }
+			Dispatcher.BeginInvoke(new Action(delegate
+				{
+					lbDrives.Items.Clear();
+					foreach (XBDM.Drive drive in _xbdm.ConsoleDrives)
+						lbDrives.Items.Add(new FilesystemDrive(drive));
+				}));
+		}
 
-        private void btnCommandFreeze_Click(object sender, RoutedEventArgs e)
-        {
-            _xbdm.SendTextCommand("stop");
-        }
-        private void btnCommandUnFreeze_Click(object sender, RoutedEventArgs e)
-        {
-            _xbdm.SendTextCommand("go");
-        }
+		private void btnCommandFreeze_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand("stop");
+		}
+		private void btnCommandUnFreeze_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand("go");
+		}
 
-        private void btnCommandColdReboot_Click(object sender, RoutedEventArgs e)
-        {
-            _xbdm.SendTextCommand("magicboot COLD");
-        }
-        private void btnCommandTitleReboot_Click(object sender, RoutedEventArgs e)
-        {
-            _xbdm.SendTextCommand("magicboot");
-        }
+		private void btnCommandColdReboot_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand("magicboot COLD");
+		}
+		private void btnCommandTitleReboot_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand("magicboot");
+		}
 
-        private void btnCommandActiveTitleReboot_Click(object sender, RoutedEventArgs e)
-        {
-            _xbdm.SendTextCommand(string.Format("magicboot title=\"{0}\" directory=\"{1}\"", _xbdm.ConsoleData.ActiveTitle, _xbdm.ConsoleData.ActiveTitle.Substring(0, _xbdm.ConsoleData.ActiveTitle.LastIndexOf("\\", StringComparison.Ordinal))));
-        }
+		private void btnCommandActiveTitleReboot_Click(object sender, RoutedEventArgs e)
+		{
+			_xbdm.SendTextCommand(string.Format("magicboot title=\"{0}\" directory=\"{1}\"", _xbdm.ConsoleData.ActiveTitle, _xbdm.ConsoleData.ActiveTitle.Substring(0, _xbdm.ConsoleData.ActiveTitle.LastIndexOf("\\", StringComparison.Ordinal))));
+		}
 
-        private void appbarRefresh_Click(object sender, EventArgs e)
-        {
-            ThreadStart ts = delegate
-            {
+		private void appbarRefresh_Click(object sender, EventArgs e)
+		{
+			ThreadStart ts = delegate
+			{
 
-                // Try catch this shit, because sometimes it's not loaded into memory yet.. soon.
-                try
-                {
-                    SystemTray.ProgressIndicator.Text = "Getting information from the console";
-                    SystemTray.ProgressIndicator.IsIndeterminate = true;
-                    SystemTray.ProgressIndicator.IsVisible = true;
+				// Try catch this shit, because sometimes it's not loaded into memory yet.. soon.
+				try
+				{
+					SystemTray.ProgressIndicator.Text = "Getting information from the console";
+					SystemTray.ProgressIndicator.IsIndeterminate = true;
+					SystemTray.ProgressIndicator.IsVisible = true;
 
-                    appbarRefresh.IsEnabled = false;
-                }
-                catch { }
+					appbarRefresh.IsEnabled = false;
+				}
+				catch { }
 
-                UpdateConsoleInfo();
-                UpdateDriveList();
+				UpdateConsoleInfo();
+				UpdateDriveList();
 
-                try
-                {
-                    appbarRefresh.IsEnabled = true;
+				try
+				{
+					appbarRefresh.IsEnabled = true;
 
-                    SystemTray.ProgressIndicator.IsVisible = false;
-                }
-                catch { }
-            };
+					SystemTray.ProgressIndicator.IsVisible = false;
+				}
+				catch { }
+			};
 
-            Thread thrd = new Thread(ts);
-            thrd.Start();
-        }
+			Thread thrd = new Thread(ts);
+			thrd.Start();
+		}
 
-        private void lbDrives_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lbDrives.SelectedItem != null)
-            {
-                App.TempStorageDRIVE = (XBDM.Drive)((FilesystemDrive)(lbDrives.SelectedItem)).Tag;
-                NavigationService.Navigate(new Uri("/Pages/DriveExplorer.xaml", UriKind.Relative));
-            }
-        }
-        private void lbFavs_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lbFavs.SelectedItem != null)
-            {
+		private void lbDrives_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (lbDrives.SelectedItem != null)
+			{
+				App.TempStorageDRIVE = (XBDM.Drive)((FilesystemDrive)(lbDrives.SelectedItem)).Tag;
+				NavigationService.Navigate(new Uri("/Pages/DriveExplorer.xaml", UriKind.Relative));
+			}
+		}
+		private void lbFavs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (lbFavs.SelectedItem != null)
+			{
 
-            }
-        }
+			}
+		}
 
-        private void appbarAbout_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/Pages/AboutNeighbourhood.xaml", UriKind.Relative));
-        }
-    }
+		private void appbarAbout_Click(object sender, EventArgs e)
+		{
+			NavigationService.Navigate(new Uri("/Pages/AboutNeighbourhood.xaml", UriKind.Relative));
+		}
+	}
 }

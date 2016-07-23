@@ -11,18 +11,18 @@ using Microsoft.Phone.Tasks;
 
 namespace Neighbourhood_WindowsPhone.Pages
 {
-    public partial class AboutNeighbourhood : PhoneApplicationPage
-    {
-        public AboutNeighbourhood()
-        {
-            InitializeComponent();
-        }
+	public partial class AboutNeighbourhood : PhoneApplicationPage
+	{
+		public AboutNeighbourhood()
+		{
+			InitializeComponent();
+		}
 
-        private void btnGoToGithub_Click(object sender, RoutedEventArgs e)
-        {
-            WebBrowserTask wb = new WebBrowserTask();
-            wb.Uri = new Uri("https://github.com/Xerax/Neighbourhood360");
-            wb.Show();
-        }
-    }
+		private void btnGoToGithub_Click(object sender, RoutedEventArgs e)
+		{
+			WebBrowserTask wb = new WebBrowserTask();
+			wb.Uri = new Uri("https://github.com/Xerax/Neighbourhood360");
+			wb.Show();
+		}
+	}
 }
